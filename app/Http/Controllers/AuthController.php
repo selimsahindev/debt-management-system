@@ -11,4 +11,9 @@ class AuthController extends Controller
     {
         return inertia('Auth/Register');
     }
+
+    public function login()
+    {
+        return inertia('Auth/Login');
+    }
 }
