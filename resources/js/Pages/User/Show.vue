@@ -1,19 +1,14 @@
 <template>
-    <Layout>
+    <Head title="Welcome" />
 
-        <Head title="Welcome" />
-
-        <div>
-            <h1>Welcome</h1>
-            <p>Hello {{ user.name }}, welcome to your first Inertia app!</p>
-        </div>
-
-    </Layout>
+    <div>
+        <h1>Welcome</h1>
+        <p>Hello {{ user.firstName + ' ' + user.lastName }}, welcome to your first Inertia app!</p>
+    </div>
 </template>
 
 <script setup>
-import Layout from '../../Layouts/Layout.vue'
-import { Head } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3';
 
-defineProps({ user: { Object } })
+const { user } = usePage().props;
 </script>

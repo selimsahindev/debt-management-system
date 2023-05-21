@@ -43,4 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getFormattedUser()
+    {
+        return [
+            'firstName' => $this->attributes['first_name'],
+            'lastName' => $this->attributes['last_name'],
+            'email' => $this->attributes['email'],
+        ];
+    }
 }

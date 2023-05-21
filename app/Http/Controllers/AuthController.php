@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class AuthController extends Controller
 {
@@ -15,35 +17,42 @@ class AuthController extends Controller
 
     public function register(AuthRequest $request)
     {
-        try {
-            $fields = $request->validated();
+        $fields = $request->validated();
 
-            $user = User::create([
-                'first_name' => $fields['firstName'],
-                'last_name' => $fields['lastName'],
-                'email' => $fields['email'],
-                'password' => bcrypt($fields['password']),
-                'confirmPassword' => 'required|same:password',
-            ]);
+        User::create($fields);
 
-            $token = $user->createToken('app')->plainTextToken;
-
-            $response = [
-                'message' => 'User created successfully.',
-                'token' => $token,
-                'user' => $user,
-            ];
-
-            return response($response, 201);
-        } catch (\Exception $exception) {
-            return response([
-                'message' => $exception->getMessage()
-            ], 400);
-        }
+        return to_route('/login');
     }
 
     public function showLoginForm()
     {
         return inertia('Auth/Login');
+    }
+
+    public function login(AuthRequest $request)
+    {
+        $fields = $request->validated();
+
+        $credentials = [
+            'email' => $fields['email'],
+            'password' => $fields['password'],
+        ];
+
+        if (Auth::attempt($credentials, $fields['rememberMe'])) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('/')->with('success', 'Logged in successfully.');
+        }
+
+        return back()->withErrors([
+            'error' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    public function logout()
+    {
+        Auth::guard('web')->logout();
+
+        return redirect()->intended('/')->with('success', 'Logged out successfully.');
     }
 }

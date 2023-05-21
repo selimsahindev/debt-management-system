@@ -30,6 +30,14 @@ class AuthRequest extends FormRequest
             ];
         }
 
+        if ($this->is('login')) {
+            return [
+                'email' => 'required|string',
+                'password' => 'required|string',
+                'rememberMe' => 'nullable|boolean',
+            ];
+        }
+
         return [];
     }
 }
