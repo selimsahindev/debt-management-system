@@ -5,5 +5,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/user', [UserController::class, 'show']);
-Route::get('/register', [AuthController::class, 'register']);
-Route::get('/login', [AuthController::class, 'login']);
+Route::get('/register', [AuthController::class, 'showRegistrationForm']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'showLoginForm']);
