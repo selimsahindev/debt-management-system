@@ -26,14 +26,14 @@ class AuthRequest extends FormRequest
                 'firstName' => 'required|string',
                 'lastName' => 'required|string',
                 'email' => 'required|string|unique:users,email',
-                'password' => 'required|string|confirmed',
+                'password' => 'required|string|confirmed|min:6',
             ];
         }
 
         if ($this->is('login')) {
             return [
                 'email' => 'required|string',
-                'password' => 'required|string',
+                'password' => 'required|string|min:6',
                 'rememberMe' => 'nullable|boolean',
             ];
         }

@@ -8,10 +8,18 @@
                 <h2 class="mb-8 text-2xl text-slate-600 font-bold text-center">Homepage</h2>
             </div>
         </div>
+
+        <div v-if="page.props.flash.message"
+            class="fixed right-8 bottom-5 px-12 py-1 text-lg rounded-lg w-max-lg bg-green-400 shadow-lg lowercase">
+            {{ page.props.flash.message }}
+        </div>
     </div>
 </template>
 
 <script setup>
+import { usePage } from '@inertiajs/vue3';
 import Navbar from '../Components/Navbar.vue';
+
+const page = usePage();
 </script>
 

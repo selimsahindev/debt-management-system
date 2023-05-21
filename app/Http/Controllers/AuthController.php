@@ -38,12 +38,14 @@ class AuthController extends Controller
             'password' => $fields['password'],
         ];
 
+        // Try to log in the user
         if (Auth::attempt($credentials, $fields['rememberMe'])) {
             $request->session()->regenerate();
 
             return redirect()->intended('/')->with('success', 'Logged in successfully.');
         }
 
+        // If the login attempt was unsuccessful, return an error message
         return back()->withErrors([
             'error' => 'The provided credentials do not match our records.',
         ]);

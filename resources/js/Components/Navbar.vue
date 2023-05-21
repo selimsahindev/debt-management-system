@@ -34,11 +34,4 @@ import { Link } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 
 const page = usePage();
-
-console.log(page.props.flash.message);
-console.log(page.props.user);
-
-if (page.props.flash.message) {
-    alert(page.props.flash.message);
-}
 </script>
