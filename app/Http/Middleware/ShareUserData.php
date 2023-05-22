@@ -16,9 +16,10 @@ class ShareUserData
      */
     public function handle(Request $request, Closure $next): Response
     {
+        /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        Inertia::share(['user' => $user]);
+        Inertia::share(['user' => $user->getFormattedUser()]);
 
         return $next($request);
     }

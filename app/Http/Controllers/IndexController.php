@@ -8,6 +8,10 @@ class IndexController extends Controller
 {
     public function index()
     {
+        if (auth()->check()) {
+            return inertia('User/Dashboard');
+        }
+
         return inertia('Index');
     }
 }

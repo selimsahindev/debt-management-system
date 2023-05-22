@@ -1,6 +1,6 @@
 <template>
     <nav>
-        <div class="flex justify-between items-center h-[100px] px-10">
+        <div class="fixed w-full flex justify-between items-center h-[100px] px-10 bg-white shadow">
             <Link href="/">
             <h1 class="text-slate-600 font-bold text-xl">BORÇ TAKİP</h1>
             </Link>
@@ -18,7 +18,10 @@
                 </Link>
             </div>
 
-            <div v-if="page.props.user">
+            <div v-if="page.props.user" class="flex flex-row gap-2">
+                <h1 class="rounded-full text-slate-600 bg-gray-50 tracking-tight text-md shadow-md px-4 py-1">{{
+                    page.props.user.firstName }}
+                </h1>
                 <Link href="/logout">
                 <h1 class="rounded-full text-slate-100 bg-slate-500 tracking-tight text-md shadow-md px-4 py-1">
                     Çıkış Yap

@@ -1,6 +1,4 @@
 <template>
-    <Navbar />
-
     <div
         class="flex items-center justify-center h-screen bg-fixed bg-center bg-cover bg-[url('https://cdn.vuetifyjs.com/images/parallax/material.jpg')]">
         <div class="text-2xl text-slate-800 rounded-xl h-full w-full">
@@ -47,7 +45,6 @@
 
 <script setup>
 import { useForm, usePage } from '@inertiajs/vue3';
-import Navbar from '../../Components/Navbar.vue';
 
 const form = useForm({
     email: null,
@@ -56,6 +53,5 @@ const form = useForm({
 });
 
 const page = usePage();
-
 const login = () => form.post('/login');
 </script>

@@ -1,24 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
-use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [IndexController::class, 'index'])->name('index');
-
-Route::controller(AuthController::class)->group(function () {
-    Route::group(['middleware' => 'guest'], function () {
-        Route::get('/register', 'showRegistrationForm');
-        Route::post('/register', 'register');
-        Route::get('/login', 'showLoginForm');
-        Route::post('/login', 'login');
-    });
+// Guest routes
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AuthController::class, 'showRegistrationForm']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/login', [AuthController::class, 'showLoginForm']);
+    Route::post('/login', [AuthController::class, 'login']);
 });
 
+// Protected routes
 Route::middleware('auth:sanctum')->group(function () {
-    // Protected routes
-    Route::get('/user', [UserController::class, 'show']);
+    Route::get('/', [DashboardController::class, 'index']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });
+
+Route::get('/', [IndexController::class, 'index'])->name('index');
