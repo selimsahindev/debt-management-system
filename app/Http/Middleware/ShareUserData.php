@@ -16,11 +16,20 @@ class ShareUserData
      */
     public function handle(Request $request, Closure $next): Response
     {
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
+        try {
+            if (auth()->check()) {
+                /** @var \App\Models\User $user */
+                $user = auth()->user();
+                Inertia::share(['user' => [
+                    'firstName' => $user->first_name,
+                    'lastName' => $user->last_name,
+                    'email' => $user->email,
+                ]]);
+            }
 
-        Inertia::share(['user' => $user->getFormattedUser()]);
-
-        return $next($request);
+            return $next($request);
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
     }
 }
