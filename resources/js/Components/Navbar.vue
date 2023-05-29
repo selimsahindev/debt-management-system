@@ -43,5 +43,4 @@ import { Link } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 
 const page = usePage();
-console.log(page.props.user);
 </script>
