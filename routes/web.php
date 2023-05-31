@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\DebtController;
 
 // Guest routes
 Route::middleware('guest')->group(function () {
@@ -28,6 +29,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}/edit', [CustomerController::class, 'showEditCustomerPage']);
         Route::post('/{id}/edit', [CustomerController::class, 'edit']);
     });
+
+    Route::resource('debts', DebtController::class);
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');

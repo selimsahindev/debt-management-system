@@ -29,4 +29,9 @@ class Customer extends Model
             'address' => $this->attributes['address'],
         ];
     }
+
+    public function debts()
+    {
+        return $this->hasMany(Debt::class);
+    }
 }
