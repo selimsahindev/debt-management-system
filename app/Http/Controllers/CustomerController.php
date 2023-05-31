@@ -28,6 +28,19 @@ class CustomerController extends Controller
         return inertia('Customer/Create');
     }
 
+    public function showEditCustomerPage($id)
+    {
+        try {
+            $customer = Customer::findOrFail($id);
+
+            return inertia('Customer/Edit', [
+                'customer' => $customer->getFormattedCustomer()
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
     public function createCustomer(Request $request)
     {
         try {
@@ -50,17 +63,47 @@ class CustomerController extends Controller
                 'address' => $request->address,
             ]);
 
-            return redirect()->intended('/customers')->with('success', 'Customer created successfully');
+            return redirect()->intended('/customers')->with('success', 'Customer created successfully')->refresh();
         } catch (\Exception $e) {
-            dd('Error: ' . $e->getMessage());
             return back()->with('error', $e->getMessage());
         }
     }
 
     public function destroy(Customer $customer)
     {
-        $customer->delete();
+        try {
+            $customer->delete();
 
-        return redirect()->intended('/customers')->with('success', 'Customer deleted successfully');
+            return redirect()->intended('/customers')->with('success', 'Customer deleted successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function edit(Request $request, $id)
+    {
+        try {
+            $customer = Customer::findOrFail($id);
+
+            $fields = $request->validate([
+                'firstName' => 'required|max:80',
+                'lastName' => 'required|max:80',
+                'email' => 'required|email|max:100',
+                'phone' => 'required|max:20',
+                'address' => 'required|max:255',
+            ]);
+
+            $customer->first_name = $fields['firstName'];
+            $customer->last_name = $fields['lastName'];
+            $customer->email = $fields['email'];
+            $customer->phone = $fields['phone'];
+            $customer->address = $fields['address'];
+
+            $customer->save();
+
+            return redirect()->intended('/customers')->with('success', 'Customer updated successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 }

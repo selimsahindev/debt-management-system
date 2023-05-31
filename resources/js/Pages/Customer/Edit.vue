@@ -13,13 +13,13 @@
     <div class="p-4 sm:ml-64">
         <div class="flex flex-col p-4 mt-4 rounded-lg shadow">
             <div class="inline-flex items-center justify-between my-6">
-                <h1 class="text-xl font-bold text-slate-500">MÜŞTERİ EKLE</h1>
+                <h1 class="text-xl font-bold text-slate-500">MÜŞTERİYİ DÜZENLE</h1>
             </div>
 
-            <form @submit.prevent="createCustomer">
+            <form @submit.prevent="editCustomer">
                 <div class="grid grid-cols-4 gap-5 items-center justify-center px-4 py-5 rounded-xl bg-slate-100 shadow">
                     <input class="rounded-lg shadow px-5 py-2 w-full col-span-2" type="text" v-model="form.firstName"
-                        placeholder="Ad" required />
+                        placeholder="Ad" />
                     <input class="rounded-lg shadow px-5 py-2 w-full col-span-2" type="text" v-model="form.lastName"
                         placeholder="Soyad" required />
                     <input class="rounded-lg shadow px-5 py-2 w-full col-span-2" type="email" v-model="form.email"
@@ -32,7 +32,7 @@
                 <div class="flex flex-row justify-end mr-4 mt-6 mb-2">
                     <input
                         class="w-24 hover:cursor-pointer rounded-lg text-lg text-white text-center bg-green-500 hover:bg-green-400 transition duration-100 shadow px-4 py-1"
-                        type="submit" value="Ekle" />
+                        type="submit" value="Kaydet" />
                 </div>
             </form>
         </div>
@@ -40,17 +40,20 @@
 </template>
 
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+const customer = page.props.customer;
 
 const form = useForm({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
+    firstName: customer.firstName,
+    lastName: customer.lastName,
+    email: customer.email,
+    phone: customer.phone,
+    address: customer.address,
 });
 
-const createCustomer = () => {
-    form.post('/customers/create');
+const editCustomer = () => {
+    form.post(`/customers/${customer.id}/edit`);
 };
 </script>

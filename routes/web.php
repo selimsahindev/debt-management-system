@@ -20,13 +20,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     // Customer routes
-    Route::controller(CustomerController::class)->prefix('customers')->group(function () {
-        Route::get('/', 'index');
-        Route::get('/create', 'showAddCustomerPage');
-        Route::post('/create', 'createCustomer');
-        Route::delete('/{customer}', 'destroy');
-        // Route::get('/{id}/edit', 'showEditCustomerPage');
-        // Route::post('/{id}/edit', 'edit');
+    Route::prefix('customers')->group(function () {
+        Route::get('/', [CustomerController::class, 'index']);
+        Route::get('/create', [CustomerController::class, 'showAddCustomerPage']);
+        Route::post('/create', [CustomerController::class, 'createCustomer']);
+        Route::post('/{customer}/delete', [CustomerController::class, 'destroy']);
+        Route::get('/{id}/edit', [CustomerController::class, 'showEditCustomerPage']);
+        Route::post('/{id}/edit', [CustomerController::class, 'edit']);
     });
 });
 

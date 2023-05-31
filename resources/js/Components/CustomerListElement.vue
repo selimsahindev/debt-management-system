@@ -3,7 +3,7 @@
         <p class="col-span-2 text-md text-gray-500">{{ customer.firstName + ' ' + customer.lastName }}</p>
         <p class="col-span-2 text-md text-gray-500">{{ customer.id }}</p>
         <div class="col-span-1 flex flex-row gap-5 items-center justify-end pt-1">
-            <Link href="/edit">
+            <Link :href="`customers/${customer.id}/edit/`">
             <div class="inline-flex gap-2 items-center text-orange-400 hover:underline">
                 <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -13,7 +13,7 @@
             </div>
             </Link>
 
-            <button @click="deleteCustomer(customer.id)">
+            <button @click="deleteCustomer(customer)">
                 <div class="inline-flex gap-2 items-center text-red-600 hover:text-red-500 hover:underline">
                     <svg class="w-4 h-4 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                         viewBox="0 0 24 24">
@@ -30,15 +30,16 @@
 
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import axios from 'axios';
 
 defineProps({
     customer: Object,
     required: true
-})
+});
 
-const deleteCustomer = (id) => {
+const deleteCustomer = (customer) => {
     if (confirm('Müşteriyi silmek istediğinize emin misiniz?')) {
-        page.$inertia.delete(`/customers/${id}`);
+        axios.post(`/customers/${customer.id}/delete`);
     }
 };
 </script>
