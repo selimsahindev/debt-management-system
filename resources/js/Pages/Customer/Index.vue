@@ -36,7 +36,7 @@
 
 <script setup>
 import { Link, usePage, useForm } from '@inertiajs/vue3';
-import CustomerListElement from '@/Components/CustomerListElement.vue';
+import CustomerListElement from '@/Pages/Customer/Components/CustomerListElement.vue';
 
 const page = usePage();
 const customers = page.props.customers;

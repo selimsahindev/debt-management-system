@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Debt;
 use Illuminate\Http\Request;
+// use carbon
+use Carbon\Carbon;
 
 class DebtController extends Controller
 {
@@ -12,7 +14,26 @@ class DebtController extends Controller
      */
     public function index()
     {
-        return inertia('Debt/Index');
+        try {
+            // Get all debts from the database. format each one to include customer name
+            $debts = Debt::with('customer')->latest()->get()->map(function ($debt) {
+                return [
+                    'id' => $debt->id,
+                    'customerId' => $debt->customer_id,
+                    'customerName' => $debt->customer->first_name . ' ' . $debt->customer->last_name,
+                    'description' => $debt->description,
+                    'amount' => $debt->amount,
+                    'dueDate' => Carbon::parse($debt->due_date)->locale('tr')->isoFormat('D MMM YYYY'),
+                    'isPaid' => $debt->is_paid,
+                ];
+            });
+
+            return inertia('Debt/Index', [
+                'debts' => $debts
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -20,7 +41,7 @@ class DebtController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Debt/Create');
     }
 
     /**

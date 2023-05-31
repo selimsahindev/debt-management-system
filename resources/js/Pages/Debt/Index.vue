@@ -14,30 +14,32 @@
         <div class="flex flex-col p-4 mt-4 rounded-lg shadow">
             <div class="inline-flex items-center justify-between my-6">
                 <h1 class="text-xl font-bold text-slate-500">BORÇLAR</h1>
-                <Link href="/customers/create">
+                <Link href="/debts/create">
                 <div
                     class="rounded-lg text-white text-center bg-green-500 hover:bg-green-400 transition duration-200 shadow px-3 py-1">
-                    Müşteri Ekle
+                    Borç Ekle
                 </div>
                 </Link>
             </div>
 
-            <div class="grid grid-cols-5 items-center justify-center py-2 px-10 rounded-t-xl bg-slate-300">
-                <span class="col-span-2 font-semibold text-slate-500">Ad Soyad</span>
-                <span class="col-span-1 font-semibold text-slate-500">ID</span>
+            <div class="grid grid-cols-10 items-center justify-center py-2 px-10 rounded-t-xl bg-slate-300">
+                <span class="col-span-2 font-semibold text-slate-500">Toplam</span>
+                <span class="col-span-2 font-semibold text-slate-500">Müşteri</span>
+                <span class="col-span-2 font-semibold text-slate-500">Açıklama</span>
+                <span class="col-span-2 font-semibold text-slate-500">Son Ödeme Tarihi</span>
             </div>
 
             <div class="flex flex-col gap-3 items-center justify-center p-4 rounded-b-xl bg-slate-100 shadow">
-                <CustomerListElement v-for="customer in  customers " :customer="customer" />
+                <DebtListElement v-for="debt in debts" :debt="debt" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { Link, usePage, useForm } from '@inertiajs/vue3';
-import CustomerListElement from '@/Components/CustomerListElement.vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import DebtListElement from '@/Pages/Debt/Components/DebtListElement.vue';
 
 const page = usePage();
-const customers = page.props.customers;
+const debts = page.props.debts;
 </script>

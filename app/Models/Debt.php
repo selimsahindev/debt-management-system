@@ -25,4 +25,16 @@ class Debt extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function getFormattedDebt()
+    {
+        return [
+            'id' => $this->attributes['id'],
+            'customerId' => $this->attributes['customer_id'],
+            'description' => $this->attributes['description'],
+            'amount' => $this->attributes['amount'],
+            'dueDate' => $this->attributes['due_date'],
+            'isPaid' => $this->attributes['is_paid'],
+        ];
+    }
 }
