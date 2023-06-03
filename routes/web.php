@@ -23,14 +23,16 @@ Route::middleware('auth:sanctum')->group(function () {
     // Customer routes
     Route::prefix('customers')->group(function () {
         Route::get('/', [CustomerController::class, 'index']);
-        Route::get('/create', [CustomerController::class, 'showAddCustomerPage']);
-        Route::post('/create', [CustomerController::class, 'createCustomer']);
-        Route::post('/{customer}/delete', [CustomerController::class, 'destroy']);
-        Route::get('/{id}/edit', [CustomerController::class, 'showEditCustomerPage']);
-        Route::post('/{id}/edit', [CustomerController::class, 'edit']);
+        Route::get('/create', [CustomerController::class, 'create']);
+        Route::post('/create', [CustomerController::class, 'store']);
+        Route::get('/{id}/edit', [CustomerController::class, 'edit']);
+        Route::put('/{id}/edit', [CustomerController::class, 'update']);
+        Route::delete('/{id}', [CustomerController::class, 'destroy']);
     });
 
-    Route::resource('debts', DebtController::class);
+    Route::resources([
+        'debts' => DebtController::class,
+    ]);
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');

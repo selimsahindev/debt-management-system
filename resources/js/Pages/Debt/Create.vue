@@ -16,7 +16,7 @@
                 <h1 class="text-xl font-bold text-slate-500">BORÇ EKLE</h1>
             </div>
 
-            <form @submit.prevent="createCustomer">
+            <form @submit.prevent="createDebt">
                 <div class="grid grid-cols-6 gap-5 items-center justify-center px-4 py-5 rounded-xl bg-slate-100 shadow">
                     <input class="rounded-lg shadow px-5 py-2 w-full col-span-6" type="text" v-model="form.customer"
                         placeholder="Borç Sahibi" required />
@@ -55,7 +55,7 @@ const form = useForm({
     isPaid: false,
 });
 
-const createCustomer = () => {
-    form.post('/customers/create');
+const createDebt = () => {
+    form.post('/customers');
 };
 </script>

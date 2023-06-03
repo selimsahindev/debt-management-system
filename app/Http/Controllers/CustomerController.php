@@ -8,6 +8,9 @@ use App\Models\User;
 
 class CustomerController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         try {
@@ -23,25 +26,18 @@ class CustomerController extends Controller
         }
     }
 
-    public function showAddCustomerPage()
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
         return inertia('Customer/Create');
     }
 
-    public function showEditCustomerPage($id)
-    {
-        try {
-            $customer = Customer::findOrFail($id);
-
-            return inertia('Customer/Edit', [
-                'customer' => $customer->getFormattedCustomer()
-            ]);
-        } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
-        }
-    }
-
-    public function createCustomer(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         try {
             $this->validate($request, [
@@ -69,18 +65,34 @@ class CustomerController extends Controller
         }
     }
 
-    public function destroy(Customer $customer)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         try {
-            $customer->delete();
+            $customer = Customer::findOrFail($id);
 
-            return redirect()->intended('/customers')->with('success', 'Customer deleted successfully');
+            return inertia('Customer/Edit', [
+                'customer' => $customer->getFormattedCustomer()
+            ]);
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
     }
 
-    public function edit(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
         try {
             $customer = Customer::findOrFail($id);
@@ -101,7 +113,21 @@ class CustomerController extends Controller
 
             $customer->save();
 
-            return redirect()->intended('/customers')->with('success', 'Customer updated successfully');
+            return redirect()->intended('/customers')->with('success', 'Müşteri başarıyla güncellendi.');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try {
+            Customer::findOrFail($id)->delete();
+
+            return redirect()->intended('/customers')->with('success', 'Müşteri başarıyla silindi.');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
