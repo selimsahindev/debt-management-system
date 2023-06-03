@@ -51,6 +51,6 @@ const form = useForm({
 });
 
 const createCustomer = () => {
-    form.post('/customers/create');
+    form.post('/customers');
 };
 </script>

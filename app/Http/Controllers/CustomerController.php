@@ -59,7 +59,7 @@ class CustomerController extends Controller
                 'address' => $request->address,
             ]);
 
-            return redirect()->intended('/customers')->with('success', 'Customer created successfully')->refresh();
+            return redirect()->route('customers.index')->with('success', 'Müşteri başarıyla oluşturuldu.');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -113,7 +113,7 @@ class CustomerController extends Controller
 
             $customer->save();
 
-            return redirect()->intended('/customers')->with('success', 'Müşteri başarıyla güncellendi.');
+            return redirect()->route('customers.index')->with('success', 'Müşteri başarıyla güncellendi.');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
@@ -127,7 +127,7 @@ class CustomerController extends Controller
         try {
             Customer::findOrFail($id)->delete();
 
-            return redirect()->intended('/customers')->with('success', 'Müşteri başarıyla silindi.');
+            return redirect()->route('customers.index')->with('success', 'Müşteri başarıyla silindi.');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }

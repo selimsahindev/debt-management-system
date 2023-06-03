@@ -21,16 +21,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     // Customer routes
-    Route::prefix('customers')->group(function () {
-        Route::get('/', [CustomerController::class, 'index']);
-        Route::get('/create', [CustomerController::class, 'create']);
-        Route::post('/create', [CustomerController::class, 'store']);
-        Route::get('/{id}/edit', [CustomerController::class, 'edit']);
-        Route::put('/{id}/edit', [CustomerController::class, 'update']);
-        Route::delete('/{id}', [CustomerController::class, 'destroy']);
-    });
+    // Route::prefix('customers')->group(function () {
+    //     Route::get('/', [CustomerController::class, 'index']);
+    //     Route::get('/create', [CustomerController::class, 'create']);
+    //     Route::post('/create', [CustomerController::class, 'store']);
+    //     Route::get('/{id}/edit', [CustomerController::class, 'edit']);
+    //     Route::put('/{id}/edit', [CustomerController::class, 'update']);
+    //     Route::delete('/{id}', [CustomerController::class, 'destroy']);
+    // });
 
     Route::resources([
+        'customers' => CustomerController::class,
         'debts' => DebtController::class,
     ]);
 });

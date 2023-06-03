@@ -54,6 +54,6 @@ const form = useForm({
 });
 
 const editCustomer = () => {
-    form.put(`/customers/${customer.id}/edit`);
+    form.put(`/customers/${customer.id}`);
 };
 </script>
